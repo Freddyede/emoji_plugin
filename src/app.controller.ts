@@ -57,4 +57,16 @@ export class AppController {
     return this.appService.postOne(emojiData);
   }
 
+  /**
+   * Deletes an emoji from the database.
+   * @author Patouillard Franck<patouillardfranck3@gmail.com>
+   * @date 2025-04-07
+   * @returns {Promise<IDataPost | IError>} - Returns the deleted emoji data or an error object.
+   * @version 1.0.0
+   * @throws {UnauthorizedException} - Throws an error if the user is not authorized to delete the emoji.
+   */
+  @MessagePattern({ cmd: 'delete_emoji' })
+  deleteOne(@Body() data: {id: number, applicant: string, recipient: string}): Promise<IDataPost | IError> {
+    return this.appService.deleteOne(data);
+  }
 }

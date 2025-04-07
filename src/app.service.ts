@@ -141,4 +141,36 @@ export class AppService {
       }
   }
 
+  /**
+   * Deletes an emoji from the database.
+   * @date 2025-04-07
+   * @author Patouillard Franck<patouillardfranck3@gmail.com>
+   * @param emojiData - The emoji data to be deleted.
+   * @param emojiData.id - The ID of the emoji to be deleted.
+   * @param emojiData.applicant - The applicant's identifier.
+   * @param emojiData.recipient - The recipient's identifier.
+   * @returns {Promise<IDataPost | IError>} - Returns the result of the deletion or an error object.
+   * @version 1.0.0
+   * @throws {UnauthorizedException} - Throws an error if the user is not authorized to delete the emoji.
+   */
+  async deleteOne(emojiData: {id: number, applicant: string, recipient: string}): Promise<IDataPost | IError> {
+    if(
+      await this.expressionsService.verifyIfIsGoodApplicantAndRecipientToString(emojiData) &&
+      await this.iconRepository.findOneBy({ id: emojiData.id })
+    ) {
+      await this.iconRepository.delete(emojiData.id);
+      return {
+        message: 'Emoji deleted successfully',
+        status: HttpStatus.OK
+      };
+    } else if(await this.expressionsService.verifyIfIsGoodApplicantAndRecipientToString(emojiData)){
+      throw new UnauthorizedException('You are not authorized to delete this emoji');
+    } else {
+      return {
+        message: 'NOT FOUND',
+        status: HttpStatus.NOT_FOUND
+      };
+    }
+  }
+
 }
