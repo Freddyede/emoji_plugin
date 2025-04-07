@@ -158,7 +158,9 @@ export class AppService {
       await this.expressionsService.verifyIfIsGoodApplicantAndRecipientToString(emojiData) &&
       await this.iconRepository.findOneBy({ id: emojiData.id })
     ) {
-      await this.iconRepository.delete(emojiData.id);
+      const icon = await this.iconRepository.findOneBy({ id: emojiData.id });
+      icon.deleted_at = new Date();
+      await this.iconRepository.save(icon);
       return {
         message: 'Emoji deleted successfully',
         status: HttpStatus.OK
