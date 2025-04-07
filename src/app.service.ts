@@ -1,8 +1,5 @@
-import { HttpStatus, Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { IDataPost, IError, IGetAll, IGetDatabaseName, IGetOne } from './IAppService.interface';
-import { InjectRepository } from '@nestjs/typeorm';
-import { IconEntity } from './icon.entity';
-import { Repository } from 'typeorm';
 import { databaseConfig } from './app.config';
 import { Client, ClientProxy, Transport } from '@nestjs/microservices';
 import { IconDto } from './icon.dto';
