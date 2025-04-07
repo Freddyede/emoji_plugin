@@ -11,4 +11,8 @@ export class IconEntity {
     @Column({ type: "datetime", default: Date.now() })
     @CreateDateColumn()
     created_at: Date;
+    @Column({ type: "datetime", default: null, nullable: true })
+    updated_at: Date;
+    @Column({ type: "datetime", default: null, nullable: true })
+    deleted_at: Date;
 }
